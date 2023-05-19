@@ -19,82 +19,22 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.white,
-                Color(0xFF90CAF9),
-                Color(0xFF90CAF9),
-                Color(0xFF64B5F6),
-                Color(0xFF42A5F5),
-              ],
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text('data'),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text('data'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 6,
-                child: Container(
-                  color: Colors.transparent,
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GetRowBottom('ac', 'ce', '%', '/'),
-                      GetRowBottom('1', '2', '3', '*'),
-                      GetRowBottom('4', '5', '6', '-'),
-                      GetRowBottom('7', '8', '9', '+'),
-                      GetRowBottom('00', '0', '.', '='),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  bool isboldbottom(String text) {
+    var list = ['ac', 'ce', '%', '/', '*', '-', '+', '='];
+    for (var item in list) {
+      if (text == item) {
+        return true;
+      }
+    }
+    return false;
   }
-}
 
-class GetRowBottom extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final String text3;
-  final String text4;
-  const GetRowBottom(this.text1, this.text2, this.text3, this.text4,
-      {super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget getRowBottom(
+    String text1,
+    String text2,
+    String text3,
+    String text4,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -105,17 +45,8 @@ class GetRowBottom extends StatelessWidget {
       ],
     );
   }
-}
 
-class SingleBottom extends StatelessWidget {
-  final String text;
-  const SingleBottom(
-    this.text, {
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget SingleBottom(String text) {
     if (isboldbottom(text)) {
       return Padding(
         padding: const EdgeInsets.all(20.0),
@@ -149,7 +80,9 @@ class SingleBottom extends StatelessWidget {
             ),
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              bottompressed(text);
+            },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) {
@@ -209,7 +142,9 @@ class SingleBottom extends StatelessWidget {
           ),
         ),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            bottompressed(text);
+          },
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
@@ -238,14 +173,79 @@ class SingleBottom extends StatelessWidget {
       ),
     );
   }
-}
 
-bool isboldbottom(String text) {
-  var list = ['ac', 'ce', '%', '/', '*', '-', '+', '='];
-  for (var item in list) {
-    if (text == item) {
-      return true;
-    }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.white,
+                Color(0xFF90CAF9),
+                Color(0xFF90CAF9),
+                Color(0xFF64B5F6),
+                Color(0xFF42A5F5),
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          inputuser,
+                          style: const TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'PBI',
+                            fontWeight: FontWeight.bold,
+                            color: Color(
+                              0xff1C487A,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text('data'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 6,
+                child: Container(
+                  color: Colors.transparent,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      getRowBottom('ac', 'ce', '%', '/'),
+                      getRowBottom('1', '2', '3', '*'),
+                      getRowBottom('4', '5', '6', '-'),
+                      getRowBottom('7', '8', '9', '+'),
+                      getRowBottom('00', '0', '.', '='),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
-  return false;
 }
