@@ -12,6 +12,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String inputuser = '';
+  void bottompressed(String text) {
+    setState(() {
+      inputuser = inputuser + text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,45 +41,28 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                flex: 3,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      color: Colors.transparent,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Press me'),
-                        style: ButtonStyle(
-                          overlayColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.pressed)) {
-                                return Colors.red.withOpacity(0.8);
-                              }
-                              return Colors.transparent;
-                            },
-                          ),
-                        ),
+              Directionality(
+                textDirection: TextDirection.rtl,
+                child: Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text('data'),
                       ),
-                      //  const Text(
-                      //   'data',
-                      //   textAlign: TextAlign.right,
-                      //   style: TextStyle(
-                      //     fontSize: 36,
-                      //     fontWeight: FontWeight.bold,
-                      //     fontStyle: FontStyle.italic,
-                      //     fontFamily: 'PBI',
-                      //   ),
-                      // ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text('data'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
-                flex: 7,
+                flex: 6,
                 child: Container(
                   color: Colors.transparent,
                   child: const Column(
@@ -129,42 +119,55 @@ class SingleBottom extends StatelessWidget {
     if (isboldbottom(text)) {
       return Padding(
         padding: const EdgeInsets.all(20.0),
-        child: InkResponse(
-          onTap: () {},
-          child: Container(
-            height: 80,
-            width: 62,
-            decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  //0xFFB71C1C
-                  color: Color.fromARGB(255, 187, 77, 77),
-                  offset: Offset(4, 4),
-                  blurRadius: 10,
-                  spreadRadius: 3,
-                ),
-                BoxShadow(
-                  color: Color(0xfff297a2),
-                  offset: Offset(-4, -4),
-                  blurRadius: 10,
-                  spreadRadius: 3,
-                ),
+        child: Container(
+          height: 80,
+          width: 65,
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                //0xFFB71C1C
+                color: Color.fromARGB(255, 187, 77, 77),
+                offset: Offset(4, 4),
+                blurRadius: 10,
+                spreadRadius: 3,
+              ),
+              BoxShadow(
+                color: Color(0xfff297a2),
+                offset: Offset(-4, -4),
+                blurRadius: 10,
+                spreadRadius: 3,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(16),
+            gradient: const LinearGradient(
+              end: Alignment.topRight,
+              begin: Alignment.bottomRight,
+              colors: [
+                Colors.white,
+                Color.fromARGB(255, 249, 156, 144),
               ],
-              borderRadius: BorderRadius.circular(16),
-              gradient: const LinearGradient(
-                end: Alignment.topRight,
-                begin: Alignment.bottomRight,
-                colors: [
-                  Colors.white,
-                  Color.fromARGB(255, 249, 156, 144),
-                ],
+            ),
+          ),
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return Colors.red;
+                  }
+                  return Colors.transparent;
+                },
+              ),
+              backgroundColor: MaterialStateProperty.all(
+                Colors.transparent,
               ),
             ),
             child: Center(
               child: Text(
                 text,
                 style: const TextStyle(
-                  fontSize: 36,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
                   fontStyle: FontStyle.italic,
                   fontFamily: 'PBI',
@@ -177,41 +180,54 @@ class SingleBottom extends StatelessWidget {
     }
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          height: 62,
-          width: 62,
-          decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                color: Color.fromARGB(255, 89, 85, 85),
-                offset: Offset(4, 4),
-                blurRadius: 10,
-                spreadRadius: 3,
-              ),
-              BoxShadow(
-                color: Color(0xFF9E9E9E),
-                offset: Offset(-4, -4),
-                blurRadius: 10,
-                spreadRadius: 3,
-              ),
+      child: Container(
+        height: 68,
+        width: 68,
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 89, 85, 85),
+              offset: Offset(4, 4),
+              blurRadius: 10,
+              spreadRadius: 3,
+            ),
+            BoxShadow(
+              color: Color(0xFF9E9E9E),
+              offset: Offset(-4, -4),
+              blurRadius: 10,
+              spreadRadius: 3,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(16),
+          gradient: const LinearGradient(
+            end: Alignment.topRight,
+            begin: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              Color(0xFF90CAF9),
             ],
-            borderRadius: BorderRadius.circular(16),
-            gradient: const LinearGradient(
-              end: Alignment.topRight,
-              begin: Alignment.bottomRight,
-              colors: [
-                Colors.white,
-                Color(0xFF90CAF9),
-              ],
+          ),
+        ),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ButtonStyle(
+            overlayColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed)) {
+                  return const Color.fromARGB(255, 57, 143, 213);
+                }
+                return Colors.transparent;
+              },
+            ),
+            backgroundColor: MaterialStateProperty.all(
+              Colors.transparent,
             ),
           ),
           child: Center(
             child: Text(
               text,
               style: const TextStyle(
-                fontSize: 36,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
                 fontFamily: 'PBI',
