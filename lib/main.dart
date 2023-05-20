@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +14,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String inputuser = '';
+  String result = '';
   void bottompressed(String text) {
     setState(() {
       inputuser = inputuser + text;
@@ -81,7 +83,29 @@ class _MyAppState extends State<MyApp> {
           ),
           child: ElevatedButton(
             onPressed: () {
-              bottompressed(text);
+              if (text == 'ce') {
+                setState(() {
+                  if (inputuser.isNotEmpty) {
+                    inputuser = inputuser.substring(0, inputuser.length - 1);
+                  }
+                });
+              } else if (text == '=') {
+                Parser parser = Parser();
+                Expression expression = parser.parse(inputuser);
+                ContextModel contextModel = ContextModel();
+                double eval =
+                    expression.evaluate(EvaluationType.REAL, contextModel);
+                setState(() {
+                  result = eval.toString();
+                });
+              } else if (text == 'ac') {
+                setState(() {
+                  result = '';
+                  inputuser = '';
+                });
+              } else {
+                bottompressed(text);
+              }
             },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.resolveWith<Color>(
@@ -196,34 +220,40 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: Expanded(
-                  flex: 3,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Text(
-                          inputuser,
-                          style: const TextStyle(
-                            fontSize: 50,
-                            fontFamily: 'PBI',
-                            fontWeight: FontWeight.bold,
-                            color: Color(
-                              0xff1C487A,
-                            ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        inputuser,
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          fontSize: 50,
+                          fontFamily: 'PBI',
+                          fontWeight: FontWeight.bold,
+                          color: Color(
+                            0xff1C487A,
                           ),
                         ),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Text('data'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        result,
+                        textAlign: TextAlign.end,
+                        style: const TextStyle(
+                          fontSize: 65,
+                          fontFamily: 'PBI',
+                          color: Color.fromARGB(255, 33, 47, 243),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
