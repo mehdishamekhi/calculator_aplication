@@ -40,15 +40,15 @@ class _MyAppState extends State<MyApp> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SingleBottom(text1),
-        SingleBottom(text2),
-        SingleBottom(text3),
-        SingleBottom(text4),
+        singlebottom(text1),
+        singlebottom(text2),
+        singlebottom(text3),
+        singlebottom(text4),
       ],
     );
   }
 
-  Widget SingleBottom(String text) {
+  Widget singlebottom(String text) {
     if (isboldbottom(text)) {
       return Padding(
         padding: const EdgeInsets.all(20.0),
